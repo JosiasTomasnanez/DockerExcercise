@@ -1,0 +1,20 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+COPY app.py .
+COPY start.sh .
+
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y redis-server redis-tools && rm -rf /var/lib/apt/lists/*
+
+# Instalar dependencias Python
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Dar permisos al script
+RUN chmod +x start.sh
+
+EXPOSE 5000
+
+CMD ["./start.sh"]
