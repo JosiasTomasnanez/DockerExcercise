@@ -12,10 +12,10 @@ Este proyecto es un servidor web simple usando **Flask** y Redis, totalmente con
 2. Ejecuta el siguiente comando para construir la imagen Docker:
 
 ```bash
-docker build -t hola-mundo-flask .
+docker build -t contador-visitas-flask .
 ```
 
-- `-t hola-mundo-flask` es el nombre que le damos a la imagen.
+- `-t contador-visitas-flask` es el nombre que le damos a la imagen.
 - `.` indica que Docker debe usar el Dockerfile en el directorio actual.
 
 > Este comando instalará todas las dependencias de Python y del sistema dentro del contenedor.
@@ -27,7 +27,7 @@ docker build -t hola-mundo-flask .
 1. Una vez construida la imagen, ejecuta el contenedor con:
 
 ```bash
-docker run -d -p 5000:5000 --name flask_app hola-mundo-flask
+docker run -d -p 5000:5000 --name flask_app contador-visitas-flask
 ```
 
 - `-d` ejecuta el contenedor en segundo plano.
