@@ -1,6 +1,6 @@
 # DOCKER_SETUP.md
 
-# Proyecto: Hola Mundo con Flask
+# Proyecto: Contador de visitas con Flask
 
 Este proyecto es un servidor web simple usando **Flask** y Redis, totalmente containerizado con Docker.
 
