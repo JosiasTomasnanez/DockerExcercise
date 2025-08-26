@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY requirements.txt .
 COPY app.py .
+COPY feature_flags.py .
+COPY manage_flags.py .
 COPY start.sh .
 
 # Instalar dependencias del sistema

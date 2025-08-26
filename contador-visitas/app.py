@@ -1,3 +1,4 @@
+import feature_flags
 from flask import Flask
 import redis
 import time
@@ -22,24 +23,35 @@ def wait_for_redis():
     
     raise Exception("❌ No se pudo conectar a Redis")
 
+    
 @app.route('/')
 def contador_visitas():
     try:
         redis_client = wait_for_redis()
         visitas = redis_client.incr('visitas')
+
+        if feature_flags.is_enabled("colores_dinamicos"):
+        # Nueva funcionalidad: fondo rojo/verde según par/impar
+            fondo = "red" if visitas % 2 == 0 else "green"
+        else:
+        # Comportamiento original
+            fondo = "white"
+
         return f'''
         <html>
-            <body style="font-family: Arial; text-align: center; padding: 50px;">
+            <body style="font-family: Arial; text-align: center; padding: 50px; background-color: {fondo}; color: white;">
                 <h1>📊 Contador de Visitas</h1>
                 <p style="font-size: 24px;">¡Número de visitas: <strong>{visitas}</strong>! 🎉</p>
                 <p>✅ Redis funcionando correctamente</p>
-                <a href="/reiniciar">🔄 Reiniciar contador</a> | 
-                <a href="/health">❤️ Health check</a>
+                <a href="/reiniciar" style="color: white;">🔄 Reiniciar contador</a> | 
+                <a href="/health" style="color: white;">❤️ Health check</a>
             </body>
         </html>
         '''
     except Exception as e:
         return f'❌ Error: {str(e)}'
+
+
 
 @app.route('/reiniciar')
 def reiniciar_contador():
